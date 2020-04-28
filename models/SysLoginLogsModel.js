@@ -1,30 +1,23 @@
 const  Sequelize = require('sequelize')
 const db = require('../db/mysql.db')
 
-let User = db.define('user', 
+let SysLoginLogsModel = db.define('sys_login_logs', 
   {
     user_id: {
       type: Sequelize.INTEGER, //字段类型
-      primaryKey: true,
       allowNull: false, // 不为空
-      autoIncrement: true
     },
-    nick_name: Sequelize.CHAR(255), //如果只有类型，可以直接这么设置
-    password: Sequelize.CHAR(255),
-    email: Sequelize.CHAR(255),
-    phone: {
-      type: Sequelize.CHAR(32),
-      unique: true // 字段是否是 unique 唯一不重复
-    },
-    state: Sequelize.TINYINT,
-    avatar: Sequelize.CHAR(255),
-    update_id: Sequelize.INTEGER
-
+    login_ip: Sequelize.CHAR(255),
+    login_address: Sequelize.CHAR(50),
+    login_description: Sequelize.CHAR(50),
+    user_name: Sequelize.CHAR(50),
+    login_agent: Sequelize.CHAR(255),
+    login_agen_info: Sequelize.CHAR(255)
   },
   {
-    tableName: 'sys_user',
+    tableName: 'sys_login_logs',
     timestamps: true,// 是否需要增加createdAt、updatedAt字段
-    createdAt: 'create_time', // 不需要createdAt字段
+    createdAt: 'login_time', // 不需要createdAt字段
     updatedAt: false,//修改updatedAt字段名称为endtime
     freezeTableName: true,// 禁用修改表名; 默认情况下,sequelize将自动将所有传递的模型名称(define的第一个参数)转换为复数. 如果你不想这样,请设置为true
   }
@@ -38,5 +31,9 @@ let User = db.define('user',
 //     })
 //   }
 // });
+// hasOne - 添加外键到目标模型，并以单数关系混入到源模型
+// belongsTo - 为当前模型添加外键，并以单数关系混入到源模型
+// hasMany - 添加外键到目标模型，并以复数关系混入到源模型
+// belongsToMany - 为连接的表创建N:M关系并以复数关系混入到源模型。会通过sourceId和targetId创建交叉表。
 
-module.exports = User
+module.exports = SysLoginLogsModel
