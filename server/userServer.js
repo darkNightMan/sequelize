@@ -1,8 +1,8 @@
-const User = require('../models/SysUserModel')
+const SysUserModel = require('../models/SysUserModel')
 const SysUserRoleModel = require('../models/SysUserRoleModel')
 class UserServer {
   async findAll () {
-    let data = await SysUserRoleModel.findAll({
+    let data = await SysUserModel.findAll({
       include: [{
         model: SysUserRoleModel,
         where: {
@@ -13,7 +13,7 @@ class UserServer {
     return data
   }
   async findOne (id) {
-    let data = await SysUserRoleModel.findOne({where: {user_id: id}}) 
+    let data = await SysUserModel.findOne({where: {user_id: id}}) 
     return data
   }
 }

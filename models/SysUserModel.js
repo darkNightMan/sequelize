@@ -33,21 +33,6 @@ let SysUserModel = db.define('sys_user',
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 //如果是第一次运行的话,需要用sync 方法创建表
 // User.sync({force: true}).then(d=> { //建议在表模型设计完成后，打开此段代码，待数据库中表建立完成后，注释掉此段，防止每次都删除并重新建表
 //   for (let n=1;n<10;n++) {

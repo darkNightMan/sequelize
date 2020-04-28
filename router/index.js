@@ -2,7 +2,7 @@ const UserContorller = require('../contorller/UserContorller')
 
 
 let router = (app) => {
-  app.get('/api/list', UserContorller.list)
+  app.get('/api/test', UserContorller.test)
   app.get('/api/find', UserContorller.findone)
 }
 
