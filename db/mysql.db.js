@@ -4,7 +4,7 @@ let sqlConfig = {
     host: "localhost",
     user: "root",
     password: "root",
-    database: "demo-sequelize"
+    database: "blog"
 }
 let db = new Sequelize(sqlConfig.database, sqlConfig.user, sqlConfig.password, {
     host: sqlConfig.host,

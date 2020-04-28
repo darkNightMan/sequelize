@@ -6,7 +6,7 @@ class UserServer {
     return data
   }
   async findOne (id) {
-    let data = await User.findOne({where: {id: id}}) 
+    let data = await User.findOne({where: {user_id: id}}) 
     return data
   }
 }
