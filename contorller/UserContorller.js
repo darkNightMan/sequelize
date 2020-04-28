@@ -1,7 +1,7 @@
 // const UserServer = require('../server/userServer.js')
-const SysUserModel = require('../models/SysUserModel')
-const SysUserRoleModel = require('../models/SysUserRoleModel')
-const SysRolePermmisionModel = require('../models/SysRolePermmisionModel')
+// const SysUserModel = require('../models/SysUserModel')
+// const SysUserRoleModel = require('../models/SysUserRoleModel')
+// const SysRolePermmisionModel = require('../models/SysRolePermmisionModel')
 const SysResourceModel = require('../models/SysResourceModel')
 const  Sequelize = require('sequelize')
 const Op = Sequelize.Op;//通过Op调用对应操作符
