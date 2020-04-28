@@ -14,6 +14,10 @@ class UserController {
       data: _data
     })
    }
+   async getUserInfo () {
+     let user_id = 1
+     
+   }
 }
 
 module.exports =  new UserController()
