@@ -29,8 +29,9 @@ let SysRoleModel = db.define('sys_role',
 
 
 
-
-
+// db.sync({
+//   force: true      // 强制同步
+// });
 
 
 

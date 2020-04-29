@@ -3,6 +3,13 @@ const db = require('../db/mysql.db')
 
 let SysUserRoleModel = db.define('sys_user_role', 
   {
+    id: {
+      type: Sequelize.INTEGER,
+      primaryKey: true,
+      allowNull: false, // 不为空
+      autoIncrement: true
+      
+    },
     user_id: {
       type: Sequelize.INTEGER, //字段类型
       allowNull: false, // 不为空

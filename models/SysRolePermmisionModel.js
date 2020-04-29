@@ -3,6 +3,13 @@ const db = require('../db/mysql.db')
 
 let SysRolePermmisionModel = db.define('sys_role_permmision', 
   {
+    id: {
+      type: Sequelize.INTEGER,
+      primaryKey: true,
+      allowNull: false, // 不为空
+      autoIncrement: true
+      
+    },
     role_id: {
       type: Sequelize.INTEGER, //字段类型
       allowNull: false, // 不为空

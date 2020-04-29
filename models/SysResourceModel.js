@@ -18,7 +18,7 @@ let SysRoleModel = db.define('sys_resource',
     component: Sequelize.CHAR(50),
     description: Sequelize.CHAR(255),
     sort:Sequelize.BIGINT,
-    perms: Sequelize.CHAR(500)
+    perms: Sequelize.CHAR(255)
   },
   {
     tableName: 'sys_resource',

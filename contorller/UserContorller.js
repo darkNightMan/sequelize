@@ -6,16 +6,24 @@ const SysRolePermmisionModel = require('../models/SysRolePermmisionModel')
 const SysResourceModel = require('../models/SysResourceModel')
 const  Sequelize = require('sequelize')
 const Op = Sequelize.Op;//通过Op调用对应操作符
-// 一对一多
-SysUserModel.hasMany(SysUserRoleModel, {foreignKey:'user_id',})
-// 一对一多
-SysRoleModel.hasMany(SysUserRoleModel, {foreignKey:'role_id'})
 
-//  用户角色多对多
+
+// 一对一多 用户表对关联表 
+SysUserModel.hasMany(SysUserRoleModel, { foreignKey:'user_id',  as: 'roleLits'}) //  外键约束
+// 一对一多 角色对关联表
+SysRoleModel.hasMany(SysUserRoleModel, { foreignKey:'role_id',  as: 'roleLits'}) //  外键约束
+
+
+// 一对一多  角色对关联表
+SysRoleModel.hasMany(SysRolePermmisionModel, { foreignKey:'role_id'})   //  外键约束
+// 一对一多  权限对关联表
+SysResourceModel.hasMany(SysRolePermmisionModel, { foreignKey:'res_id'}) //  外键约束
+
+// 用户-角色 多对多
 SysUserModel.belongsToMany(SysRoleModel, {
   through: {
     model: SysUserRoleModel,
-    unique: false
+    unique: false // 取消联合主键的约定
   },
   foreignKey: 'user_id', //通过外键user_id
   constraints: false
@@ -23,13 +31,12 @@ SysUserModel.belongsToMany(SysRoleModel, {
 SysRoleModel.belongsToMany(SysUserModel, {
   through: {
       model: SysUserRoleModel,
-      unique: false,
+      unique: false,// 取消联合主键的约定
   },
   foreignKey: 'role_id', //通过外键role_id
   constraints: false
 })
-
-//  角色权限多对多
+// 角色-权限 多对多
 SysRoleModel.belongsToMany(SysResourceModel, {
   through: {
     model: SysRolePermmisionModel,
@@ -46,9 +53,6 @@ SysResourceModel.belongsToMany(SysRoleModel, {
   foreignKey: 'res_id', //通过外键role_id
   constraints: false
 })
-
-
-
 
 class UserController {
    async test (req, res) {
@@ -94,6 +98,7 @@ class UserController {
       include: {
         model: SysUserRoleModel,
         attributes: ['role_id'],
+        as: 'roleLits'
       }
     })
 

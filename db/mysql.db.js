@@ -4,7 +4,7 @@ let sqlConfig = {
     host: "localhost",
     user: "root",
     password: "root",
-    database: "blog"
+    database: "test"
 }
 let db = new Sequelize(sqlConfig.database, sqlConfig.user, sqlConfig.password, {
     host: sqlConfig.host,
@@ -15,8 +15,8 @@ let db = new Sequelize(sqlConfig.database, sqlConfig.user, sqlConfig.password, {
         idle: 10000
     }
 });
-db.authenticate().then(() => {
-  console.log('mysql connection success.成功');
+db.authenticate().then((p) => {
+  console.log('created. ' + JSON.stringify(p));
 }).catch(err => {
   console.error('mysql connection error:', err);
 });
