@@ -1,12 +1,108 @@
 // const UserServer = require('../server/userServer.js')
-// const SysUserModel = require('../models/SysUserModel')
-// const SysUserRoleModel = require('../models/SysUserRoleModel')
-// const SysRolePermmisionModel = require('../models/SysRolePermmisionModel')
+const SysUserModel = require('../models/SysUserModel')
+const SysUserRoleModel = require('../models/SysUserRoleModel')
+const SysRoleModel = require('../models/SysRoleModel')
+const SysRolePermmisionModel = require('../models/SysRolePermmisionModel')
 const SysResourceModel = require('../models/SysResourceModel')
 const  Sequelize = require('sequelize')
 const Op = Sequelize.Op;//通过Op调用对应操作符
+// 一对一多
+SysUserModel.hasMany(SysUserRoleModel, {foreignKey:'user_id',})
+// 一对一多
+SysRoleModel.hasMany(SysUserRoleModel, {foreignKey:'role_id'})
+
+//  用户角色多对多
+SysUserModel.belongsToMany(SysRoleModel, {
+  through: {
+    model: SysUserRoleModel,
+    unique: false
+  },
+  foreignKey: 'user_id', //通过外键user_id
+  constraints: false
+})
+SysRoleModel.belongsToMany(SysUserModel, {
+  through: {
+      model: SysUserRoleModel,
+      unique: false,
+  },
+  foreignKey: 'role_id', //通过外键role_id
+  constraints: false
+})
+
+//  角色权限多对多
+SysRoleModel.belongsToMany(SysResourceModel, {
+  through: {
+    model: SysRolePermmisionModel,
+    unique: false
+  },
+  foreignKey: 'role_id', //通过外键user_id
+  constraints: false
+})
+SysResourceModel.belongsToMany(SysRoleModel, {
+  through: {
+      model: SysRolePermmisionModel,
+      unique: false,
+  },
+  foreignKey: 'res_id', //通过外键role_id
+  constraints: false
+})
+
+
+
+
 class UserController {
    async test (req, res) {
+     // 给用户设置角色
+    //  let user = await SysUserModel.create({nick_name: 'joke', password: 123})  //返回创建的user对象
+    //  let roles = await SysRoleModel.findAll({ 
+    //     where: { role_id: [1]}
+    //   })  //  找到对应的角色
+    //  let row = await user.addSys_roles(roles)
+
+    // let roleArr = await SysUserModel.findAll({
+    //   attributes: ['user_id'],
+    //   where: {
+    //     user_id: 33
+    //   },
+    //   include: [
+    //     {
+    //       model: SysRoleModel,   
+    //       attributes: ['role_id'],
+    //       // as: 'roleList' 取别名
+    //     }
+    //   ]
+    // })
+   
+    // let resArr = await SysRoleModel.findAndCountAll({
+    //   // attributes: ['user_id'],
+    //   where: {
+    //     role_id: [1,2]
+    //   },
+    //   include: [
+    //     {
+    //       model: SysResourceModel,   
+    //       // attributes: ['role_id', 'role_name'],
+    //       // where: { role_id: 1}
+    //     }
+    //   ]
+    // })
+    let role = await SysUserModel.findOne({
+      attributes: ['user_id'],
+      where: {
+        user_id: 33
+      },
+      include: {
+        model: SysUserRoleModel,
+        attributes: ['role_id'],
+      }
+    })
+
+    res.json({
+      data: role
+    })
+    // res.json({
+    //   data: resArr.rows[0].sys_resources
+    // })
       //  查询
       // let _data = await SysUserModel.findAll({
       //   attributes: ['nick_name'] // 过滤
@@ -96,12 +192,7 @@ class UserController {
       //      parent_id: [1,2] 
       //   }
       // })
-         
-       
-     
-      res.json({
-        data: update
-      })
+   
    }
    async findone (req, res) {
      let { id } = req.query
